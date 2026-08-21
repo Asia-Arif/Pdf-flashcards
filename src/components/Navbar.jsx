@@ -1,20 +1,14 @@
 const Navbar = () => {
     return (
-        <nav className="bg-gray-900 text-white px-6 py-4">
-            <div className="max-w-6xl mx-auto flex justify-between items-center">
+        <nav className="bg-white border-b border-gray-200">
+            <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
-                <h1 className="text-2xl font-bold">
-                    PDF Flashcards
+                <h1 className="text-xl font-bold text-gray-900">
+                    PDF<span className="text-blue-600">Cards</span>
                 </h1>
 
-                <div className="flex gap-6">
-                    <a href="/" className="hover:text-gray-300">
-                        Upload
-                    </a>
-
-                    <a href="/dashboard" className="hover:text-gray-300">
-                        Dashboard
-                    </a>
+                <div className="text-sm text-gray-500">
+                    Smart PDF Flashcards
                 </div>
 
             </div>
