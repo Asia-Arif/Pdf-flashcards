@@ -1,23 +1,23 @@
-const { PDFParse } = require("pdf-parse");
+// const { PDFParse } = require("pdf-parse");
 
-const extractPdfText = async (buffer) => {
-    try {
-        const parser = new PDFParse({
-            data: buffer
-        });
+// const extractPdfText = async (buffer) => {
+//     try {
+//         const parser = new PDFParse({
+//             data: buffer
+//         });
 
-        const result = await parser.getText();
+//         const result = await parser.getText();
 
-        await parser.destroy();
+//         await parser.destroy();
 
-        return result.text;
+//         return result.text;
 
-    } catch (error) {
-        console.error("PDF text extraction error:", error);
-        throw new Error("Failed to extract text from PDF");
-    }
-};
+//     } catch (error) {
+//         console.error("PDF text extraction error:", error);
+//         throw new Error("Failed to extract text from PDF");
+//     }
+// };
 
-module.exports = {
-    extractPdfText
-};
+// module.exports = {
+//     extractPdfText
+// };

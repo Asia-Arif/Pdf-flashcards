@@ -3,44 +3,22 @@ import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import UploadBox from "../components/UploadBox";
-import { uploadPdf } from "../services/api";
 
 const Upload = () => {
-
     const navigate = useNavigate();
 
-    const [uploading, setUploading] = useState(false);
     const [error, setError] = useState("");
 
-    const handleGenerate = async (file) => {
+    const handleGenerate = (file) => {
+        setError("");
 
-        try {
-
-            setUploading(true);
-            setError("");
-
-            const data = await uploadPdf(file);
-
-            console.log("Upload response:", data);
-
-            navigate("/processing", {
-                state: {
-                    file: file,
-                    pdf: data.file
-                }
-            });
-
-        } catch (error) {
-
-            console.error(error);
-
-            setError(error.message || "Something went wrong");
-
-        } finally {
-
-            setUploading(false);
-
-        }
+        // Send the selected PDF to Processing page.
+        // Actual upload + Gemini processing will happen there.
+        navigate("/processing", {
+            state: {
+                file
+            }
+        });
     };
 
     return (
@@ -72,7 +50,6 @@ const Upload = () => {
 
                     <UploadBox
                         onGenerate={handleGenerate}
-                        uploading={uploading}
                     />
 
                     {error && (
