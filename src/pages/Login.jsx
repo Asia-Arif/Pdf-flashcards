@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../backend/config/envConfig";
+
 const Login = () => {
     const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ const Login = () => {
 
         try {
             const response = await fetch(
-                "BASE_URL/api/auth/login",
+                "http://localhost:5000/api/auth/login",
                 {
                     method: "POST",
                     headers: {
