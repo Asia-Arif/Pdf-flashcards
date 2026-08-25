@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -46,6 +47,9 @@ const Login = () => {
 
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
+
+            // Login success toast
+            toast.success("Login successful! 🎉");
 
             navigate("/dashboard");
 

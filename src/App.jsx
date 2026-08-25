@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import Upload from "./pages/Upload";
 import Processing from "./pages/Processing";
@@ -15,6 +16,13 @@ function App() {
     return (
         <BrowserRouter>
 
+            <Toaster
+                position="top-right"
+                toastOptions={{
+                    duration: 3000,
+                }}
+            />
+
             <Routes>
 
                 {/* Public Routes */}
@@ -28,7 +36,6 @@ function App() {
                     path="/register"
                     element={<Register />}
                 />
-
 
                 {/* Protected Routes */}
 

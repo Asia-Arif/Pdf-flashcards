@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -13,6 +14,8 @@ const Navbar = () => {
         localStorage.removeItem("user");
 
         setToken(null);
+
+        toast.success("Logged out successfully! 👋");
 
         navigate("/login");
     };

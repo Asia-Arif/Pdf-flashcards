@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 const Register = () => {
     const navigate = useNavigate();
 
@@ -44,7 +46,8 @@ const Register = () => {
                 return;
             }
 
-            setMessage("Registration successful!");
+            // Registration success toast
+            toast.success("Registration successful! 🎉");
 
             setTimeout(() => {
                 navigate("/login");
@@ -133,7 +136,7 @@ const Register = () => {
                         </div>
 
                         {message && (
-                            <p className="text-sm text-center text-blue-600">
+                            <p className="text-sm text-center text-red-500">
                                 {message}
                             </p>
                         )}
