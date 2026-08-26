@@ -338,14 +338,52 @@ const getChapterFlashcards = async (req, res) => {
     }
 };
 
+const downloadPdf = async (req, res) => {
+    try {
+        const { pdfId } = req.params;
+
+       const pdf = await PDF.findById(pdfId);
+
+        if (!pdf) {
+            return res.status(404).json({
+                message: "PDF not found"
+            });
+        }
+
+        const response = await fetch(pdf.url);
+
+        if (!response.ok) {
+            return res.status(500).json({
+                message: "Failed to fetch PDF from Cloudinary"
+            });
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        res.setHeader("Content-Type", "application/pdf");
+
+        res.setHeader(
+            "Content-Disposition",
+            `attachment; filename="${pdf.originalName}"`
+        );
+
+        res.send(buffer);
+
+    } catch (error) {
+        console.error("PDF download error:", error);
+
+        res.status(500).json({
+            message: "Failed to download PDF"
+        });
+    }
+};
+
 
 
 module.exports = {
-
     uploadPdf,
-
     getPdfs,
-
-    getChapterFlashcards
-
+    getChapterFlashcards,
+    downloadPdf
 };

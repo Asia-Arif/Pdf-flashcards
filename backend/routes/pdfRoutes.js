@@ -4,8 +4,11 @@ const multer = require("multer");
 const {
     uploadPdf,
     getPdfs,
-    getChapterFlashcards
+    getChapterFlashcards,
+    downloadPdf
 } = require("../controllers/pdfController");
+
+
 
 const authMiddleware = require("../middleware/authMiddleware");
 
@@ -44,6 +47,11 @@ router.get(
     "/chapter/:chapterId",
     authMiddleware,
     getChapterFlashcards
+);
+router.get(
+    "/download/:pdfId",
+    authMiddleware,
+    downloadPdf
 );
 
 module.exports = router;

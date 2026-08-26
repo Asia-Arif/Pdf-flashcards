@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
-import { getPdfs } from "../services/api";
+import { getPdfs, downloadPdf } from "../services/api";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -27,19 +27,17 @@ const Dashboard = () => {
         fetchPdfs();
     }, []);
 
-    const handleViewPdf = (pdfUrl) => {
-        if (!pdfUrl) {
-            alert("PDF URL is not available");
-            return;
-        }
+  const handleViewPdf = async (pdfId, fileName) => {
+    console.log("PDF ID:", pdfId);
+    console.log("File Name:", fileName);
 
-        // Agar URL relative path ho (e.g. /uploads/filename.pdf), to backend server path add karein
-        const fullUrl = pdfUrl.startsWith("http")
-            ? pdfUrl
-            : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${pdfUrl}`;
-
-        window.open(fullUrl, "_blank", "noopener,noreferrer");
-    };
+    try {
+        await downloadPdf(pdfId, fileName);
+    } catch (error) {
+        console.error("PDF download error:", error);
+        alert(error.message || "Failed to download PDF");
+    }
+};
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -138,7 +136,7 @@ const Dashboard = () => {
 
                                     {/* View Original PDF Button (Moved to Header) */}
                                     <button
-                                        onClick={() => handleViewPdf(pdf.url || pdf.filePath)}
+                                        onClick={() => handleViewPdf(pdf._id, pdf.originalName)}
                                         className="border border-gray-200 text-gray-700 hover:bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2"
                                     >
                                         <span>📄</span> View Original PDF

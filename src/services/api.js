@@ -70,3 +70,50 @@ export const getChapterFlashcards = async (chapterId) => {
 
     return data;
 };
+
+// Download original PDF
+export const downloadPdf = async (pdfId, fileName) => {
+    const response = await fetch(
+        `${API_URL}/pdf/download/${pdfId}`,
+        {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        }
+    );
+
+    if (!response.ok) {
+        let message = "Failed to download PDF";
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {
+            // Ignore JSON parsing error
+        }
+
+        throw new Error(message);
+    }
+
+    const blob = await response.blob();
+
+    const downloadUrl = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = downloadUrl;
+
+    const pdfFileName = fileName?.toLowerCase().endsWith(".pdf")
+        ? fileName
+        : `${fileName}.pdf`;
+
+    link.download = pdfFileName;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    window.URL.revokeObjectURL(downloadUrl);
+};
